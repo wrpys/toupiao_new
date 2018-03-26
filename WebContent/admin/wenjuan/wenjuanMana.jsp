@@ -63,7 +63,7 @@ String path = request.getContextPath();
 				<tr align="center" bgcolor="#FAFAF1" height="22">
 					<td width="5%">序号</td>
 					<td width="40%">名称</td>
-					<td width="15%">名称</td>
+					<td width="15%">类型</td>
 					<td width="15%">发布时间</td>
 					<td width="25%">操作</td>
 		        </tr>	

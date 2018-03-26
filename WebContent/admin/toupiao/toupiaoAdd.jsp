@@ -6,6 +6,7 @@
 
 <%
 String path = request.getContextPath();
+String mingchengType = request.getParameter("mingchengType");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -21,9 +22,11 @@ String path = request.getContextPath();
         <link rel="stylesheet" type="text/css" href="<%=path %>/css/base.css" />
         <script type="text/javascript" src="<%=path %>/js/jquery-1.7.2.min.js"></script>
         
+        <c:set var="mingchengType" value="<%=mingchengType %>"/>
+        
         <script language="javascript">
         
-        	var mingchengType = "<%=request.getParameter("mingchengType") %>";
+        	var mingchengType = "${mingchengType}";
 		
         	var letter = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
         
@@ -86,8 +89,20 @@ String path = request.getContextPath();
 						             题目标题：
 						    </td>
 						    <td width="90%" bgcolor="#FFFFFF" align="left">
-						       	 <input type="text" name="title" size="80"/>
+						       	 <input type="text" name="subjectTitle" size="80"/>
 						       	 <input type="button" value="添加选项" onclick="add()"/>
+						    </td>
+						</tr>
+						<tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='red';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22">
+						    <td width="10%" bgcolor="#FFFFFF" align="right">
+						             题目类型：
+						    </td>
+						    <td width="90%" bgcolor="#FFFFFF" align="left">
+						       	 <select name="subjectType" >
+						       	 	<option value="1">单选</option>
+						       	 	<option value="2">多选</option>
+						       	 	<option value="3">文本</option>
+						       	 </select>
 						    </td>
 						</tr>
 						<tr class="answerTemplate" align="center" bgcolor="#FFFFFF" height="22">
@@ -96,6 +111,9 @@ String path = request.getContextPath();
 						    </td>
 						    <td width="90%" bgcolor="#FFFFFF" align="left">
 						    	<input type="text" name="answerA" size="80"/>
+						    	<c:if test="${mingchengType == 2}">
+						    		<input class="selectToupiao" type="button" value="选择题目" onclick="selectToupiao('answerA')"/>
+						    	</c:if>
 						    </td>
 						</tr>
 						<tr class="answerTemplate" align="center" bgcolor="#FFFFFF" height="22">
@@ -104,6 +122,9 @@ String path = request.getContextPath();
 						    </td>
 						    <td width="90%" bgcolor="#FFFFFF" align="left">
 						    	<input type="text" name="answerB" size="80"/>
+						    	<c:if test="${mingchengType == 2}">
+						    		<input class="selectToupiao" type="button" value="选择题目" onclick="selectToupiao('answerB')"/>
+						    	</c:if>
 						    	<input class="del" type="button" value="删除" onclick="del()"/>
 						    </td>
 						</tr>
@@ -113,7 +134,7 @@ String path = request.getContextPath();
 						        &nbsp;
 						    </td>
 						    <td width="90%" bgcolor="#FFFFFF" align="left">
-						       <input type="hidden" name="wenjuan_id" value="<%=request.getParameter("wenjuan_id") %>"/>
+						       <input type="hidden" name="wenjuanId" value="<%=request.getParameter("wenjuan_id") %>"/>
 						       <input type="button" value="提交" onclick="c()"/>&nbsp; 
 						       <input type="reset" value="重置"/>&nbsp;
 						    </td>
