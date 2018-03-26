@@ -48,7 +48,7 @@ String path = request.getContextPath();
 						</tr>
 						<tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='red';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22">
 						    <td width="25%" bgcolor="#FFFFFF" align="right">
-						          类似：
+						          类型：
 						    </td>
 						    <td width="75%" bgcolor="#FFFFFF" align="left">
 						        <input type="radio" checked="checked" name="mingchengType" value="1"/>顺序
