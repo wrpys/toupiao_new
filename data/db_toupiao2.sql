@@ -1,29 +1,29 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : mysql
-Source Server Version : 50087
+Source Server         : test
+Source Server Version : 50625
 Source Host           : localhost:3306
 Source Database       : db_toupiao
 
 Target Server Type    : MYSQL
-Target Server Version : 50087
+Target Server Version : 50625
 File Encoding         : 65001
 
-Date: 2018-03-25 23:21:38
+Date: 2018-03-27 16:57:04
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for `t_admin`
+-- Table structure for t_admin
 -- ----------------------------
 DROP TABLE IF EXISTS `t_admin`;
 CREATE TABLE `t_admin` (
-  `userId` int(11) NOT NULL auto_increment,
-  `userName` varchar(50) default NULL,
-  `userPw` varchar(50) default NULL,
-  PRIMARY KEY  (`userId`)
+  `userId` int(11) NOT NULL AUTO_INCREMENT,
+  `userName` varchar(50) DEFAULT NULL,
+  `userPw` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`userId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -34,17 +34,38 @@ INSERT INTO `t_admin` VALUES ('2', 'admin', 'admin');
 INSERT INTO `t_admin` VALUES ('3', '陈小西', '123');
 
 -- ----------------------------
--- Table structure for `t_gonggao`
+-- Table structure for t_answer
+-- ----------------------------
+DROP TABLE IF EXISTS `t_answer`;
+CREATE TABLE `t_answer` (
+  `answer_id` int(11) NOT NULL AUTO_INCREMENT,
+  `answer_content` varchar(255) DEFAULT NULL,
+  `subject_id` int(11) DEFAULT NULL,
+  `subject_rel_id` int(11) DEFAULT NULL COMMENT '关联题目',
+  PRIMARY KEY (`answer_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_answer
+-- ----------------------------
+INSERT INTO `t_answer` VALUES ('1', 'A.hello', '1', '1');
+INSERT INTO `t_answer` VALUES ('2', 'B.thanks', '1', '2');
+INSERT INTO `t_answer` VALUES ('3', 'C.byebye', '2', '2');
+INSERT INTO `t_answer` VALUES ('4', 'fuck', '2', '2');
+INSERT INTO `t_answer` VALUES ('5', 'A.hello', '4', '2');
+
+-- ----------------------------
+-- Table structure for t_gonggao
 -- ----------------------------
 DROP TABLE IF EXISTS `t_gonggao`;
 CREATE TABLE `t_gonggao` (
-  `gonggao_id` int(11) NOT NULL auto_increment,
-  `gonggao_title` varchar(50) default NULL,
-  `gonggao_content` varchar(255) default NULL,
-  `gonggao_data` varchar(50) default NULL,
-  `gonggao_fabuzhe` varchar(50) default NULL,
-  `gonggao_del` varchar(50) default NULL,
-  PRIMARY KEY  (`gonggao_id`)
+  `gonggao_id` int(11) NOT NULL AUTO_INCREMENT,
+  `gonggao_title` varchar(50) DEFAULT NULL,
+  `gonggao_content` varchar(255) DEFAULT NULL,
+  `gonggao_data` varchar(50) DEFAULT NULL,
+  `gonggao_fabuzhe` varchar(50) DEFAULT NULL,
+  `gonggao_del` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`gonggao_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -54,14 +75,34 @@ INSERT INTO `t_gonggao` VALUES ('1', '测试公告测试公告测试公告测试告测', '测试公
 INSERT INTO `t_gonggao` VALUES ('2', '222222222222222222222222', '1111111111111111111111111111111111', '2012-4-18 12:21:36', null, null);
 
 -- ----------------------------
--- Table structure for `t_toupiao`
+-- Table structure for t_subject
+-- ----------------------------
+DROP TABLE IF EXISTS `t_subject`;
+CREATE TABLE `t_subject` (
+  `subject_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `subject_title` varchar(255) DEFAULT NULL,
+  `subject_type` int(1) DEFAULT NULL,
+  `wenjuan_id` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`subject_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_subject
+-- ----------------------------
+INSERT INTO `t_subject` VALUES ('1', '11111', '2', '1338624423793');
+INSERT INTO `t_subject` VALUES ('2', '22222', '2', '1338624423793');
+INSERT INTO `t_subject` VALUES ('3', '33333', '2', '1338624423793');
+INSERT INTO `t_subject` VALUES ('4', '2', '2', '1338624423793');
+
+-- ----------------------------
+-- Table structure for t_toupiao
 -- ----------------------------
 DROP TABLE IF EXISTS `t_toupiao`;
 CREATE TABLE `t_toupiao` (
-  `id` varchar(255) NOT NULL default '',
-  `title` varchar(255) default NULL,
-  `wenjuan_id` varchar(255) default NULL,
-  PRIMARY KEY  (`id`)
+  `id` varchar(255) NOT NULL DEFAULT '',
+  `title` varchar(255) DEFAULT NULL,
+  `wenjuan_id` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -76,15 +117,15 @@ INSERT INTO `t_toupiao` VALUES ('1338855153957', '测试题目', '1338624423793');
 INSERT INTO `t_toupiao` VALUES ('1338855177043', '11111111111', '1338855116547');
 
 -- ----------------------------
--- Table structure for `t_toupiaoxuanxiang`
+-- Table structure for t_toupiaoxuanxiang
 -- ----------------------------
 DROP TABLE IF EXISTS `t_toupiaoxuanxiang`;
 CREATE TABLE `t_toupiaoxuanxiang` (
-  `id` varchar(255) NOT NULL default '',
-  `xuanxiangneirong` varchar(255) default NULL,
-  `piaoshu` int(11) default NULL,
-  `toupiao_id` varchar(255) default NULL,
-  PRIMARY KEY  (`id`)
+  `id` varchar(255) NOT NULL DEFAULT '',
+  `xuanxiangneirong` varchar(255) DEFAULT NULL,
+  `piaoshu` int(11) DEFAULT NULL,
+  `toupiao_id` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -120,21 +161,21 @@ INSERT INTO `t_toupiaoxuanxiang` VALUES ('1338855177147', '222222222', '0', '133
 INSERT INTO `t_toupiaoxuanxiang` VALUES ('1338855177270', '333333333', '0', '1338855177043');
 
 -- ----------------------------
--- Table structure for `t_user`
+-- Table structure for t_user
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user` (
-  `user_id` int(11) NOT NULL auto_increment,
-  `user_name` varchar(50) default NULL,
-  `user_pw` varchar(50) default NULL,
-  `user_realname` varchar(50) default NULL,
-  `user_address` varchar(50) default NULL,
-  `user_sex` varchar(50) default NULL,
-  `user_tel` varchar(50) default NULL,
-  `user_email` varchar(50) default NULL,
-  `user_qq` varchar(50) default NULL,
-  `user_del` varchar(50) default NULL,
-  PRIMARY KEY  (`user_id`)
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(50) DEFAULT NULL,
+  `user_pw` varchar(50) DEFAULT NULL,
+  `user_realname` varchar(50) DEFAULT NULL,
+  `user_address` varchar(50) DEFAULT NULL,
+  `user_sex` varchar(50) DEFAULT NULL,
+  `user_tel` varchar(50) DEFAULT NULL,
+  `user_email` varchar(50) DEFAULT NULL,
+  `user_qq` varchar(50) DEFAULT NULL,
+  `user_del` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -148,13 +189,13 @@ INSERT INTO `t_user` VALUES ('5', '你好', '123', '123', '123', '男', '123', '123
 INSERT INTO `t_user` VALUES ('6', '123', '123', '123', '123', '男', '123', '123', '123', 'no');
 
 -- ----------------------------
--- Table structure for `t_web`
+-- Table structure for t_web
 -- ----------------------------
 DROP TABLE IF EXISTS `t_web`;
 CREATE TABLE `t_web` (
-  `id` int(20) NOT NULL auto_increment,
-  `content_info` varchar(200) default NULL,
-  PRIMARY KEY  (`id`)
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `content_info` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -163,15 +204,15 @@ CREATE TABLE `t_web` (
 INSERT INTO `t_web` VALUES ('1', '123');
 
 -- ----------------------------
--- Table structure for `t_wenjuan`
+-- Table structure for t_wenjuan
 -- ----------------------------
 DROP TABLE IF EXISTS `t_wenjuan`;
 CREATE TABLE `t_wenjuan` (
-  `id` varchar(255) NOT NULL default '',
-  `mingcheng` varchar(255) default NULL,
-  `shijian` varchar(255) default NULL,
-  `mingcheng_type` int(11) default '1',
-  PRIMARY KEY  (`id`)
+  `id` varchar(255) NOT NULL DEFAULT '',
+  `mingcheng` varchar(255) DEFAULT NULL,
+  `shijian` varchar(255) DEFAULT NULL,
+  `mingcheng_type` int(11) DEFAULT '1',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------

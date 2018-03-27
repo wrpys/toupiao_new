@@ -83,6 +83,8 @@
 		</action>
 		<action name="getTimuByWenjuanIdOne2" class="wenjuanAction" method="getTimuByWenjuanIdOne2">
 		</action>
+		<action name="getAllSubjects" class="wenjuanAction" method="getAllSubjects">
+		</action>
 		<!-- czx add end-->
 		<action name="wenjuanAdd" class="wenjuanAction" method="wenjuanAdd">
 		</action>

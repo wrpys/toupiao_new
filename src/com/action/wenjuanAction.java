@@ -132,6 +132,25 @@ public class wenjuanAction extends ActionSupport {
 		return ActionSupport.SUCCESS;
 	}
 	
+	
+	
+	/**
+	 * 根据问卷ID获取所有的题目
+	 * @author CZX
+	 * @return
+	 */
+	public String getAllSubjects() {
+		HttpServletRequest request = ServletActionContext.getRequest();
+		String wenjuanId = request.getParameter("wenjuan_id");//问卷信息ID
+		String sql = "from TSubject where wenjuan_id=" + wenjuanId + " order by subject_id ASC";
+		List<TSubject> subjectList = subjectDAO.getHibernateTemplate().find(sql);
+		Map<String,Object> response = (Map) ServletActionContext.getContext().get("request");
+		response.put("subjectList", subjectList);
+		request.setAttribute("msg", "根据问卷ID获取所有的题目成功!");
+		return "msg";
+		//return ActionSupport.SUCCESS;
+	}
+	
 	/**
 	 * 展示此问卷信息的第一道题目，不管做任何回答，都跳转至下一道题目
 	 * @author CZX
