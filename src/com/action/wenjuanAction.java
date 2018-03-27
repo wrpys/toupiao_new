@@ -144,11 +144,12 @@ public class wenjuanAction extends ActionSupport {
 		String wenjuanId = request.getParameter("wenjuan_id");//问卷信息ID
 		String sql = "from TSubject where wenjuan_id=" + wenjuanId + " order by subject_id ASC";
 		List<TSubject> subjectList = subjectDAO.getHibernateTemplate().find(sql);
-		Map<String,Object> response = (Map) ServletActionContext.getContext().get("request");
-		response.put("subjectList", subjectList);
-		request.setAttribute("msg", "根据问卷ID获取所有的题目成功!");
-		return "msg";
-		//return ActionSupport.SUCCESS;
+		Map<String,Object> request2 = (Map) ServletActionContext.getContext().get("request");
+		if (subjectList == null) {
+			subjectList = new ArrayList<TSubject>();
+		}
+		request2.put("subjectList", subjectList);
+		return ActionSupport.SUCCESS;
 	}
 	
 	/**
@@ -161,22 +162,21 @@ public class wenjuanAction extends ActionSupport {
 		//String 此次问卷ID = request.getParameter("此次问卷ID");//此次问卷ID
 		String wenjuanId = request.getParameter("wenjuan_id");//问卷信息ID
 		String subjectId = request.getParameter("subject_id");//題目ID,便于获取下一道题目
-		String sql = "from TSubject where wenjuan_id=" + wenjuanId + " order by subject_id ASC";
-		List<TSubject> subjectList = subjectDAO.getHibernateTemplate().find(sql);
-		Map<String,Object> response = (Map) ServletActionContext.getContext().get("request");
+		String sql = "";
 		if("".equals(subjectId) || null==subjectId) {
-			response.put("subject", subjectList.get(0));
-			//return ActionSupport.SUCCESS;
+			sql = "from TSubject where wenjuan_id=" + wenjuanId + " order by subject_id ASC LIMIT 0,1";
 		}else {
-			for (int i = 0; i < subjectList.size(); i++) {
-				if(subjectList.get(i).getSubjectId().toString().equals(subjectId)) {
-					response.put("subject", subjectList.get(i+1));
-				}
-			}
+			sql = "from TSubject where wenjuan_id=" + wenjuanId + " and t.subject_id>" + subjectId + " order by subject_id ASC LIMIT 0,1";
 		}
-		request.setAttribute("msg", "getTimuByWenjuanId1题目获取成功!");
-		return "msg";
-		//return ActionSupport.SUCCESS;
+		List<TSubject> subjectList = subjectDAO.getHibernateTemplate().find(sql);
+		if(subjectList != null && subjectList.size() > 0) {
+			request.setAttribute("subject", subjectList.get(0));
+			List<TAnswer> answers = answerDAO.getHibernateTemplate().find("");
+			request.setAttribute("answers", answers);
+		} else {
+			request.setAttribute("subject", null);
+		}
+		return ActionSupport.SUCCESS;
 	}
 
 	

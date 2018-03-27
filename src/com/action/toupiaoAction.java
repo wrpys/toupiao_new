@@ -3,8 +3,11 @@ package com.action;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.struts2.ServletActionContext;
+
 import com.dao.TAnswerDAO;
 import com.dao.TSubjectDAO;
 import com.dao.TToupiaoDAO;
@@ -19,13 +22,16 @@ public class toupiaoAction extends ActionSupport {
 
 	private static final long serialVersionUID = -4225143477547173182L;
 	
-	private ArrayList<String> answers;//单选或多选的答案列表。文本域的话数组只有一条记录
+	private List<TAnswer> answers;//单选或多选的答案列表。文本域的话数组只有一条记录
 	
 	private TToupiaoDAO toupiaoDAO;
 	private TToupiaoxuanxiangDAO toupiaoxuanxiangDAO;
 	
 	private TSubjectDAO subjectDAO;
 	private TAnswerDAO answerDAO;
+	
+	private String message;
+	private String path;
 
 	public String toupiaoAdd() {
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -64,23 +70,23 @@ public class toupiaoAction extends ActionSupport {
 	 */
 	public String toupiaoShunxuAdd() {
 		HttpServletRequest request = ServletActionContext.getRequest();
-		String wenjuanId = request.getParameter("wenjuan_id");//问卷信息ID
-		String subjectTitle = request.getParameter("subject_type");//题目标题
-		int subjectType = Integer.parseInt(request.getParameter("subject_type"));//（单选，多选，文本）
+		String wenjuanId = request.getParameter("wenjuanId");//问卷信息ID
+		String mingchengType = request.getParameter("mingchengType");//问卷信息类型
+		String subjectTitle = request.getParameter("subjectTitle");//题目标题
+		int subjectType = Integer.parseInt(request.getParameter("subjectType"));//（单选，多选，文本）
 		TSubject subject = new TSubject();
 		subject.setSubjectTitle(subjectTitle);
 		subject.setSubjectType(subjectType);
 		subject.setWenjuanId(wenjuanId);
 		TSubject result  =subjectDAO.saveRe(subject);
 		Long subjectId = result.getSubjectId();//save subject and in order to get the id
-		for (String answerContent : answers) {
-			TAnswer answer = new TAnswer();
-			answer.setAnswerContent(answerContent);
+		for (TAnswer answer : answers) {
 			answer.setSubjectId(subjectId);
 			answerDAO.save(answer);
 		}
-		request.setAttribute("msg", "顺序添加题目完毕");
-		return "msg";
+		this.setMessage("添加完毕");
+		this.setPath("admin/toupiao/toupiaoAdd.jsp?wenjuan_id="+wenjuanId+"&mingchengType="+mingchengType);
+		return "succeed";
 	}
 	
 	/**
@@ -90,9 +96,10 @@ public class toupiaoAction extends ActionSupport {
 	 */
 	public String toupiaoTiaozhuanAdd() {
 		HttpServletRequest request = ServletActionContext.getRequest();
-		String wenjuanId = request.getParameter("wenjuan_id");//问卷信息ID
-		String subjectTitle = request.getParameter("subject_type");//题目标题
-		int subjectType = Integer.parseInt(request.getParameter("subject_type"));//（单选，多选，文本）
+		String wenjuanId = request.getParameter("wenjuanId");//问卷信息ID
+		String mingchengType = request.getParameter("mingchengType");//问卷信息类型
+		String subjectTitle = request.getParameter("subjectTitle");//题目标题
+		int subjectType = Integer.parseInt(request.getParameter("subjectType"));//（单选，多选，文本）
 		TSubject subject = new TSubject();
 		subject.setSubjectTitle(subjectTitle);
 		subject.setSubjectType(subjectType);
@@ -100,15 +107,13 @@ public class toupiaoAction extends ActionSupport {
 		TSubject result  =subjectDAO.saveRe(subject);
 		Long subjectId = result.getSubjectId();//save subject and in order to get the id
 		//{answer_content:答案,subject_rel_id:关联题目},{answer_content:答案2,subject_rel_id:关联题目2}
-		for (String answerContent : answers) {
-			TAnswer answer = new TAnswer();
-			answer.setAnswerContent((answerContent.split(",")[0]).split(":")[1]);
+		for (TAnswer answer : answers) {
 			answer.setSubjectId(subjectId);
-			answer.setSubjectRelId(Integer.parseInt((answerContent.split(",")[1]).split(":")[1]));
 			answerDAO.save(answer);
 		}
-		request.setAttribute("msg", "添加跳转题目完毕");
-		return "msg";
+		this.setMessage("添加完毕");
+		this.setPath("admin/toupiao/toupiaoAdd.jsp?wenjuan_id="+wenjuanId+"&mingchengType="+mingchengType);
+		return "succeed";
 	}
 	
 
@@ -168,13 +173,29 @@ public class toupiaoAction extends ActionSupport {
 		this.answerDAO = answerDAO;
 	}
 
-	public ArrayList<String> getAnswers() {
+	public List<TAnswer> getAnswers() {
 		return answers;
 	}
 
 
-	public void setAnswers(ArrayList<String> answers) {
+	public void setAnswers(List<TAnswer> answers) {
 		this.answers = answers;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 }

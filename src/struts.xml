@@ -84,6 +84,7 @@
 		<action name="getTimuByWenjuanIdOne2" class="wenjuanAction" method="getTimuByWenjuanIdOne2">
 		</action>
 		<action name="getAllSubjects" class="wenjuanAction" method="getAllSubjects">
+			<result>/admin/toupiao/select_subject.jsp</result>
 		</action>
 		<!-- czx add end-->
 		<action name="wenjuanAdd" class="wenjuanAction" method="wenjuanAdd">

@@ -14,13 +14,28 @@
 		<meta http-equiv="description" content="This is my page" />
 		
 		<link href="<%=path %>/css/layout.css" type="text/css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="<%=path %>/css/jquery-ui.css" />
+        <script type="text/javascript" src="<%=path %>/js/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="<%=path %>/js/jquery-ui.js"></script>
 		
 	    <script type="text/javascript">
+    	   var wenjuan_id = null;
 	       function wenjuanDetailQian(id)
            {
-                var strUrl = "<%=path %>/wenjuanDetailQian.action?id="+id;
-				var ret = window.showModalDialog(strUrl,"","dialogWidth:800px; dialogHeight:600px; dialogLeft: status:no; directories:yes;scrollbars:yes;Resizable=no;");
+	    	   wenjuan_id = id;
+	    	   $("#dialog").dialog("open");
            } 
+	       $(function(){
+        		$("#dialog").dialog({
+        		      autoOpen: false,
+        		      modal: true,
+        		      width: 700,
+        		      height: 500,
+        		      open: function(ev, ui){  
+        	             $('#subjectRel').attr('src','<%=path%>/getTimuByWenjuanId1.action?wenjuan_id=' + wenjuan_id);  
+        	          }
+        		});
+        	})
 	    </script>
 	</head>
 
@@ -37,7 +52,8 @@
                                   <div class="c1-bline" style="padding:7px 0px;">
                                        <div class="f-left">
                                             <img src="<%=path %>/img/head-mark4.gif" align="middle" class="img-vm" border="0"/> 
-                                            <a href="#" onclick="wenjuanDetailQian(<s:property value="#wenjuan.id"/>)"><s:property value="#wenjuan.mingcheng"/></a>
+                                            <a href="#" onclick="wenjuanDetailQian(<s:property value="#wenjuan.id"/>)">
+                                            <s:property value="#wenjuan.mingcheng"/></a>
                                        </div>
                                        <div class="f-right"><s:property value="#wenjuan.shijian"/></div>
                                        <div class="clear"></div>
@@ -51,6 +67,10 @@
 					  </div>	
 				      <div style="clear:both;"></div>
 			     </div>
+			     <div id="dialog" title="选择题目">
+				  <iframe noresize="" id="subjectRel" name="subjectRel" 
+				  scrolling="yes" style="width: 100%;height: 95%;border: 0;"></iframe>
+				</div>
 			</div>
 			
 			<div class="page_other_msg right">

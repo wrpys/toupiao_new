@@ -30,6 +30,7 @@ String mingchengType = request.getParameter("mingchengType");
         	var currentSubjectRelId = null;
         	
         	var mingchengType = "${mingchengType}";
+        	var wenjuan_id = "<%=request.getParameter("wenjuan_id")%>";
 		
         	var letter = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
         
@@ -50,9 +51,9 @@ String mingchengType = request.getParameter("mingchengType");
         		tds.eq(0).append(letter[ats.length - 1] + "：");
         		var _html2 = [];
         		//debugger;
-        		_html2.push('<input type="text" name="answer[' + (ats.length-1) + '].answerContent" size="80"/>');
+        		_html2.push('<input type="text" name="answers[' + (ats.length-1) + '].answerContent" size="80"/>');
         		if(mingchengType == "2" && $("select[name='subjectType']").val() == "1") {
-        			_html2.push('<input type="hidden" name="answer[' + (ats.length-1) + '].subjectRelId" /><input class="selectToupiao" type="button" value="选择题目" onclick="selectToupiao(this)"/>');
+        			_html2.push('<input type="hidden" name="answers[' + (ats.length-1) + '].subjectRelId" /><input class="selectToupiao" type="button" value="选择题目" onclick="selectToupiao(this)"/>');
         		}
         		_html2.push('<input class="del" type="button" value="删除" onclick="del()"/>');
         		tds.eq(1).append(_html2.join(""));
@@ -113,7 +114,7 @@ String mingchengType = request.getParameter("mingchengType");
          		      width: 700,
          		      height: 500,
          		      open: function(ev, ui){  
-         	             $('#subjectRel').attr('src','http://www.baidu.com');  
+         	             $('#subjectRel').attr('src','<%=path%>/getAllSubjects.action?wenjuan_id=' + wenjuan_id);  
          	          }
          		    });
          	})
@@ -156,9 +157,9 @@ String mingchengType = request.getParameter("mingchengType");
 						    A：
 						    </td>
 						    <td width="90%" bgcolor="#FFFFFF" align="left">
-						    	<input type="text" name="answer[0].answerContent" size="80"/>
+						    	<input type="text" name="answers[0].answerContent" size="80"/>
 						    	<c:if test="${mingchengType == 2}">
-						    		<input type="hidden" name="answer[0].subjectRelId" />
+						    		<input type="hidden" name="answers[0].subjectRelId" />
 						    		<input class="selectToupiao" type="button" value="选择题目" onclick="selectToupiao(this)"/>
 						    	</c:if>
 						    </td>
@@ -168,9 +169,9 @@ String mingchengType = request.getParameter("mingchengType");
 						    B：
 						    </td>
 						    <td width="90%" bgcolor="#FFFFFF" align="left">
-						    	<input type="text" name="answer[1].answerContent" size="80"/>
+						    	<input type="text" name="answers[1].answerContent" size="80"/>
 						    	<c:if test="${mingchengType == 2}">
-						    		<input type="hidden" name="answer[1].subjectRelId" />
+						    		<input type="hidden" name="answers[1].subjectRelId" />
 						    		<input class="selectToupiao" type="button" value="选择题目" onclick="selectToupiao(this)"/>
 						    	</c:if>
 						    	<input class="del" type="button" value="删除" onclick="del()"/>
@@ -182,7 +183,7 @@ String mingchengType = request.getParameter("mingchengType");
 						          答案：
 						    </td>
 						    <td width="90%" bgcolor="#FFFFFF" align="left">
-						    	<textarea name="answer[0].answerContent" cols="78" rows="8"></textarea>
+						    	<textarea name="answers[0].answerContent" cols="78" rows="8"></textarea>
 						    </td>
 						</tr>
 						
@@ -192,6 +193,7 @@ String mingchengType = request.getParameter("mingchengType");
 						    </td>
 						    <td width="90%" bgcolor="#FFFFFF" align="left">
 						       <input type="hidden" name="wenjuanId" value="<%=request.getParameter("wenjuan_id") %>"/>
+						       <input type="hidden" name="mingchengType" value="<%=request.getParameter("mingchengType") %>"/>
 						       <input type="button" value="提交" onclick="c()"/>&nbsp; 
 						       <input type="reset" value="重置"/>&nbsp;
 						    </td>
@@ -199,7 +201,8 @@ String mingchengType = request.getParameter("mingchengType");
 					 </table>
 			</form>
 			<div id="dialog" title="选择题目">
-			  <iframe noresize="" id="subjectRel" name="subjectRel" scrolling="yes"></iframe>
+			  <iframe noresize="" id="subjectRel" name="subjectRel" 
+			  scrolling="yes" style="width: 100%;height: 95%;border: 0;"></iframe>
 			</div>
    </body>
 </html>
