@@ -40,6 +40,9 @@
 			    <value>com/model/TWeb.hbm.xml</value>
 			    <value>com/model/TRescueMethod.hbm.xml</value>
 			    <value>com/model/TVolunteer.hbm.xml</value>
+			    <!-- czx add -->
+			    <value>com/model/TSubject.hbm.xml</value>
+			    <value>com/model/TAnswer.hbm.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -130,6 +133,18 @@
 		</property>
 	</bean>
 	
+	<bean id="TSubjectDAO" class="com.dao.TSubjectDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="TAnswerDAO" class="com.dao.TAnswerDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
 	
 	<bean id="toupiaoAction" class="com.action.toupiaoAction" scope="prototype">
 		<property name="toupiaoDAO">
@@ -137,6 +152,12 @@
 		</property>
 		<property name="toupiaoxuanxiangDAO">
 			<ref bean="TToupiaoxuanxiangDAO" />
+		</property>
+		<property name="subjectDAO">
+			<ref bean="TSubjectDAO" />
+		</property>
+		<property name="answerDAO">
+			<ref bean="TAnswerDAO" />
 		</property>
 	</bean>
 	
@@ -155,6 +176,12 @@
 		</property>
 		<property name="toupiaoxuanxiangDAO">
 			<ref bean="TToupiaoxuanxiangDAO" />
+		</property>
+		<property name="subjectDAO">
+			<ref bean="TSubjectDAO" />
+		</property>
+		<property name="answerDAO">
+			<ref bean="TAnswerDAO" />
 		</property>
 	</bean>
 	<bean id="tWebDao" class="com.dao.TWebDao">

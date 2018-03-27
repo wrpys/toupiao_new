@@ -77,7 +77,13 @@
 			<result>/qiantai/gonggao/gonggaoQian5.jsp</result>
 		</action>
 
-
+		
+		<!-- czx add start-->
+		<action name="getTimuByWenjuanId1" class="wenjuanAction" method="getTimuByWenjuanId1">
+		</action>
+		<action name="getTimuByWenjuanIdOne2" class="wenjuanAction" method="getTimuByWenjuanIdOne2">
+		</action>
+		<!-- czx add end-->
 		<action name="wenjuanAdd" class="wenjuanAction" method="wenjuanAdd">
 		</action>
 		<action name="wenjuanDel" class="wenjuanAction" method="wenjuanDel">
@@ -103,6 +109,14 @@
 		<action name="toupiao_zhutu" class="toupiaoAction" method="toupiao_zhutu">
 			<result>/admin/toupiao/toupiao_zhutu.jsp</result>
 		</action>
+		
+		<!-- czx add start-->
+		<action name="toupiaoShunxuAdd" class="toupiaoAction" method="toupiaoShunxuAdd">
+		</action>
+		<action name="toupiaoTiaozhuanAdd" class="toupiaoAction" method="toupiaoTiaozhuanAdd">
+		</action>
+		<!-- czx add end-->
+		
 		<!--救助方法后台 -->
 		<action name="resueMethodlist" class="tRescueMethodAction" method="resueMethodlist">
 			<result>/admin/resue/resueMethod-list.jsp</result>
