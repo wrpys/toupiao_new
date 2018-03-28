@@ -3,7 +3,7 @@ package com.model;
 public class TAnswer implements java.io.Serializable{
 	
 	private static final long serialVersionUID = 8591438446498104384L;
-
+	
 	private Integer answerId;
 	
 	private String answerContent;
@@ -43,4 +43,5 @@ public class TAnswer implements java.io.Serializable{
 	public void setSubjectRelId(Integer subjectRelId) {
 		this.subjectRelId = subjectRelId;
 	}
+	
 }

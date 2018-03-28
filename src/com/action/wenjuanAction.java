@@ -164,14 +164,14 @@ public class wenjuanAction extends ActionSupport {
 		String subjectId = request.getParameter("subject_id");//題目ID,便于获取下一道题目
 		String sql = "";
 		if("".equals(subjectId) || null==subjectId) {
-			sql = "from TSubject where wenjuan_id=" + wenjuanId + " order by subject_id ASC LIMIT 0,1";
+			sql = "from TSubject where wenjuanId=" + wenjuanId + " order by subjectId ASC";
 		}else {
-			sql = "from TSubject where wenjuan_id=" + wenjuanId + " and t.subject_id>" + subjectId + " order by subject_id ASC LIMIT 0,1";
+			sql = "from TSubject where wenjuanId=" + wenjuanId + " and subjectId>" + subjectId + " order by subject_id ASC";
 		}
-		List<TSubject> subjectList = subjectDAO.getHibernateTemplate().find(sql);
+		List<TSubject> subjectList = subjectDAO.page(sql, 0, 1);
 		if(subjectList != null && subjectList.size() > 0) {
 			request.setAttribute("subject", subjectList.get(0));
-			List<TAnswer> answers = answerDAO.getHibernateTemplate().find("");
+			List<TAnswer> answers = answerDAO.getHibernateTemplate().find("from TAnswer where subjectId=" + subjectList.get(0).getSubjectId());
 			request.setAttribute("answers", answers);
 		} else {
 			request.setAttribute("subject", null);

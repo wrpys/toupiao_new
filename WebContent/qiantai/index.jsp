@@ -67,7 +67,7 @@
 					  </div>	
 				      <div style="clear:both;"></div>
 			     </div>
-			     <div id="dialog" title="选择题目">
+			     <div id="dialog" title="问卷调查">
 				  <iframe noresize="" id="subjectRel" name="subjectRel" 
 				  scrolling="yes" style="width: 100%;height: 95%;border: 0;"></iframe>
 				</div>

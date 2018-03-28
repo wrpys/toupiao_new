@@ -80,8 +80,10 @@
 		
 		<!-- czx add start-->
 		<action name="getTimuByWenjuanId1" class="wenjuanAction" method="getTimuByWenjuanId1">
+			<result>/qiantai/wenjuan/wenjuan_shunxu.jsp</result>
 		</action>
 		<action name="getTimuByWenjuanIdOne2" class="wenjuanAction" method="getTimuByWenjuanIdOne2">
+			<result>/qiantai/wenjuan/wenjuan_tiaozhuan.jsp</result>
 		</action>
 		<action name="getAllSubjects" class="wenjuanAction" method="getAllSubjects">
 			<result>/admin/toupiao/select_subject.jsp</result>

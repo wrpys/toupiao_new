@@ -1,11 +1,15 @@
 package com.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.HibernateException;
 import org.hibernate.LockMode;
+import org.hibernate.Session;
 import org.springframework.context.ApplicationContext;
+import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.model.TSubject;
@@ -14,7 +18,7 @@ import com.model.TSubject;
  * TSubjectDAO
  * 
  * @author CZX
- *
+ * 
  */
 
 public class TSubjectDAO extends HibernateDaoSupport {
@@ -34,9 +38,10 @@ public class TSubjectDAO extends HibernateDaoSupport {
 			throw re;
 		}
 	}
-	
+
 	/**
 	 * sava instance and return the instance's id
+	 * 
 	 * @author CZX
 	 * @param transientInstance
 	 * @return
@@ -48,7 +53,9 @@ public class TSubjectDAO extends HibernateDaoSupport {
 			getHibernateTemplate().flush();
 			return transientInstance; // 为何要返回呢，是因为有些主键类型是自增的，插入成功后才能得到该主键值，所以需要返回PO给调用者
 		} catch (Exception ex) {
-			throw new RuntimeException("UnChecked Exception occur when creating record: " + ex.getMessage());
+			throw new RuntimeException(
+					"UnChecked Exception occur when creating record: "
+							+ ex.getMessage());
 		}
 	}
 
@@ -66,7 +73,8 @@ public class TSubjectDAO extends HibernateDaoSupport {
 	public TSubject findById(java.lang.Long id) {
 		log.debug("getting TSubject instance with id: " + id);
 		try {
-			TSubject instance = (TSubject) getHibernateTemplate().get("com.model.TSubject", id);
+			TSubject instance = (TSubject) getHibernateTemplate().get(
+					"com.model.TSubject", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -78,7 +86,8 @@ public class TSubjectDAO extends HibernateDaoSupport {
 		log.debug("finding TSubject instance by example");
 		try {
 			List results = getHibernateTemplate().findByExample(instance);
-			log.debug("find by example successful, result size: " + results.size());
+			log.debug("find by example successful, result size: "
+					+ results.size());
 			return results;
 		} catch (RuntimeException re) {
 			log.error("find by example failed", re);
@@ -87,9 +96,11 @@ public class TSubjectDAO extends HibernateDaoSupport {
 	}
 
 	public List findByProperty(String propertyName, Object value) {
-		log.debug("finding TSubject instance with property: " + propertyName + ", value: " + value);
+		log.debug("finding TSubject instance with property: " + propertyName
+				+ ", value: " + value);
 		try {
-			String queryString = "from TSubject as model where model." + propertyName + "= ?";
+			String queryString = "from TSubject as model where model."
+					+ propertyName + "= ?";
 			return getHibernateTemplate().find(queryString, value);
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
@@ -111,7 +122,8 @@ public class TSubjectDAO extends HibernateDaoSupport {
 	public TSubject merge(TSubject detachedInstance) {
 		log.debug("merging TSubject instance");
 		try {
-			TSubject result = (TSubject) getHibernateTemplate().merge(detachedInstance);
+			TSubject result = (TSubject) getHibernateTemplate().merge(
+					detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -145,4 +157,17 @@ public class TSubjectDAO extends HibernateDaoSupport {
 	public static TSubjectDAO getFromApplicationContext(ApplicationContext ctx) {
 		return (TSubjectDAO) ctx.getBean("TSubjectDAO");
 	}
+
+	public List<TSubject> page(final String hql, final int offset,
+			final int pageSize) {
+		List list = getHibernateTemplate().executeFind(new HibernateCallback() {
+			public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				List result = session.createQuery(hql).setFirstResult(offset)
+						.setMaxResults(pageSize).list();
+				return result;
+			}
+		});
+		return list;
+	}
+
 }

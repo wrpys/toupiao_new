@@ -9,6 +9,8 @@ public class TSubject implements java.io.Serializable{
 	
 	private static final long serialVersionUID = -5462243924960629520L;
 	
+	private String[] letters = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+	
 	private Long subjectId;
 	
 	private String subjectTitle;
@@ -47,6 +49,10 @@ public class TSubject implements java.io.Serializable{
 
 	public void setWenjuanId(String wenjuanId) {
 		this.wenjuanId = wenjuanId;
+	}
+	
+	public String getLetterByIndex(int index) {
+		return letters[index];
 	}
 
 }
