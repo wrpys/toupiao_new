@@ -1,22 +1,22 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : test
-Source Server Version : 50625
+Source Server         : loc
+Source Server Version : 50528
 Source Host           : localhost:3306
 Source Database       : db_toupiao
 
 Target Server Type    : MYSQL
-Target Server Version : 50625
+Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2018-03-27 16:57:04
+Date: 2018-03-29 13:09:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for t_admin
+-- Table structure for `t_admin`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_admin`;
 CREATE TABLE `t_admin` (
@@ -34,7 +34,7 @@ INSERT INTO `t_admin` VALUES ('2', 'admin', 'admin');
 INSERT INTO `t_admin` VALUES ('3', '陈小西', '123');
 
 -- ----------------------------
--- Table structure for t_answer
+-- Table structure for `t_answer`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_answer`;
 CREATE TABLE `t_answer` (
@@ -43,19 +43,33 @@ CREATE TABLE `t_answer` (
   `subject_id` int(11) DEFAULT NULL,
   `subject_rel_id` int(11) DEFAULT NULL COMMENT '关联题目',
   PRIMARY KEY (`answer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_answer
 -- ----------------------------
-INSERT INTO `t_answer` VALUES ('1', 'A.hello', '1', '1');
-INSERT INTO `t_answer` VALUES ('2', 'B.thanks', '1', '2');
-INSERT INTO `t_answer` VALUES ('3', 'C.byebye', '2', '2');
-INSERT INTO `t_answer` VALUES ('4', 'fuck', '2', '2');
-INSERT INTO `t_answer` VALUES ('5', 'A.hello', '4', '2');
+INSERT INTO `t_answer` VALUES ('6', '答案1', '5', null);
+INSERT INTO `t_answer` VALUES ('7', '答案2', '5', null);
+INSERT INTO `t_answer` VALUES ('8', '答案3', '5', null);
+INSERT INTO `t_answer` VALUES ('9', '答案4', '6', null);
+INSERT INTO `t_answer` VALUES ('10', '答案5', '6', null);
+INSERT INTO `t_answer` VALUES ('11', '答案6', '6', null);
+INSERT INTO `t_answer` VALUES ('12', '正确答案是===', '7', null);
+INSERT INTO `t_answer` VALUES ('13', '是', '8', '9');
+INSERT INTO `t_answer` VALUES ('14', '否', '8', '10');
+INSERT INTO `t_answer` VALUES ('15', '可以', '9', '10');
+INSERT INTO `t_answer` VALUES ('16', '不可以', '9', '11');
+INSERT INTO `t_answer` VALUES ('17', '会', '10', null);
+INSERT INTO `t_answer` VALUES ('18', '不会', '10', '11');
+INSERT INTO `t_answer` VALUES ('19', '可能会', '10', null);
+INSERT INTO `t_answer` VALUES ('20', '', '11', null);
+INSERT INTO `t_answer` VALUES ('21', '你好', '12', null);
+INSERT INTO `t_answer` VALUES ('22', '你不好', '12', null);
+INSERT INTO `t_answer` VALUES ('23', '傻', '13', null);
+INSERT INTO `t_answer` VALUES ('24', '不傻', '13', null);
 
 -- ----------------------------
--- Table structure for t_gonggao
+-- Table structure for `t_gonggao`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_gonggao`;
 CREATE TABLE `t_gonggao` (
@@ -75,7 +89,7 @@ INSERT INTO `t_gonggao` VALUES ('1', '测试公告测试公告测试公告测试告测', '测试公
 INSERT INTO `t_gonggao` VALUES ('2', '222222222222222222222222', '1111111111111111111111111111111111', '2012-4-18 12:21:36', null, null);
 
 -- ----------------------------
--- Table structure for t_subject
+-- Table structure for `t_subject`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_subject`;
 CREATE TABLE `t_subject` (
@@ -84,18 +98,23 @@ CREATE TABLE `t_subject` (
   `subject_type` int(1) DEFAULT NULL,
   `wenjuan_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`subject_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_subject
 -- ----------------------------
-INSERT INTO `t_subject` VALUES ('1', '11111', '2', '1338624423793');
-INSERT INTO `t_subject` VALUES ('2', '22222', '2', '1338624423793');
-INSERT INTO `t_subject` VALUES ('3', '33333', '2', '1338624423793');
-INSERT INTO `t_subject` VALUES ('4', '2', '2', '1338624423793');
+INSERT INTO `t_subject` VALUES ('5', '顺序题目1', '1', '1521990460730');
+INSERT INTO `t_subject` VALUES ('6', '顺序题目2', '2', '1521990460730');
+INSERT INTO `t_subject` VALUES ('7', '顺序题目3', '3', '1521990460730');
+INSERT INTO `t_subject` VALUES ('8', '跳转题目1', '1', '1521990478855');
+INSERT INTO `t_subject` VALUES ('9', '跳转题目2', '1', '1521990478855');
+INSERT INTO `t_subject` VALUES ('10', '跳转题目3', '1', '1521990478855');
+INSERT INTO `t_subject` VALUES ('11', '跳转题目4', '3', '1521990478855');
+INSERT INTO `t_subject` VALUES ('12', '跳转题目5', '1', '1521990478855');
+INSERT INTO `t_subject` VALUES ('13', '跳转题目6', '1', '1521990478855');
 
 -- ----------------------------
--- Table structure for t_toupiao
+-- Table structure for `t_toupiao`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_toupiao`;
 CREATE TABLE `t_toupiao` (
@@ -117,7 +136,7 @@ INSERT INTO `t_toupiao` VALUES ('1338855153957', '测试题目', '1338624423793');
 INSERT INTO `t_toupiao` VALUES ('1338855177043', '11111111111', '1338855116547');
 
 -- ----------------------------
--- Table structure for t_toupiaoxuanxiang
+-- Table structure for `t_toupiaoxuanxiang`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_toupiaoxuanxiang`;
 CREATE TABLE `t_toupiaoxuanxiang` (
@@ -161,7 +180,7 @@ INSERT INTO `t_toupiaoxuanxiang` VALUES ('1338855177147', '222222222', '0', '133
 INSERT INTO `t_toupiaoxuanxiang` VALUES ('1338855177270', '333333333', '0', '1338855177043');
 
 -- ----------------------------
--- Table structure for t_user
+-- Table structure for `t_user`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user` (
@@ -189,7 +208,7 @@ INSERT INTO `t_user` VALUES ('5', '你好', '123', '123', '123', '男', '123', '123
 INSERT INTO `t_user` VALUES ('6', '123', '123', '123', '123', '男', '123', '123', '123', 'no');
 
 -- ----------------------------
--- Table structure for t_web
+-- Table structure for `t_web`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_web`;
 CREATE TABLE `t_web` (
@@ -204,7 +223,7 @@ CREATE TABLE `t_web` (
 INSERT INTO `t_web` VALUES ('1', '123');
 
 -- ----------------------------
--- Table structure for t_wenjuan
+-- Table structure for `t_wenjuan`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_wenjuan`;
 CREATE TABLE `t_wenjuan` (
