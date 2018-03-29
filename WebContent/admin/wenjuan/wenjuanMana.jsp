@@ -41,6 +41,11 @@ String path = request.getContextPath();
 				 //var ret = window.showModalDialog(strUrl,"","dialogWidth:800px; dialogHeight:500px; dialogLeft: status:no; directories:yes;scrollbars:yes;Resizable=no;");
            }
            
+           function subjectMana(id, mingchengType) {
+        	   var strUrl="<%=path %>/subjectMana.action?wenjuan_id="+id+"&mingchengType="+mingchengType;
+               window.location.href=strUrl;
+           }
+           
            function wenjuanYulan0(id)
            {
                 var strUrl = "<%=path %>/admin/wenjuan/wenjuanYulan0.jsp?id="+id;
@@ -85,6 +90,7 @@ String path = request.getContextPath();
 					<td bgcolor="#FFFFFF" align="center">
 						<a style="color: red" href="#" onclick="wenjuanDel(${wenjuan.id})">删除</a>
 						<a style="color: red" href="#" onclick="wenjuanYulan0(${wenjuan.id})">问卷预览</a>
+						<a style="color: red" href="#" onclick="subjectMana(${wenjuan.id}, ${wenjuan.mingchengType})">题目管理</a>
 						<a style="color: red" href="#" onclick="toupiaoAdd(${wenjuan.id}, ${wenjuan.mingchengType})">添加题目</a>
 						<a style="color: red" href="#" onclick="wenjuan_jieguo(${wenjuan.id})">调查结果</a>
 					</td>

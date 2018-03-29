@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 
 import com.dao.TAnswerDAO;
@@ -159,13 +160,17 @@ public class wenjuanAction extends ActionSupport {
 	 */
 	public String getTimuByWenjuanId1() {
 		HttpServletRequest request = ServletActionContext.getRequest();
-		//String 此次问卷ID = request.getParameter("此次问卷ID");//此次问卷ID
+		String currentWenjuanID = request.getParameter("currentWenjuanID");//此次问卷ID
 		String wenjuanId = request.getParameter("wenjuan_id");//问卷信息ID
+		String mingchengType = request.getParameter("mingchengType");//问卷信息ID
 		String subjectId = request.getParameter("subject_id");//題目ID,便于获取下一道题目
+		
 		String sql = "";
 		if("".equals(subjectId) || null==subjectId) {
 			sql = "from TSubject where wenjuanId=" + wenjuanId + " order by subjectId ASC";
 		}else {
+			// 将问卷过程数据入库。未做 TODO
+			
 			sql = "from TSubject where wenjuanId=" + wenjuanId + " and subjectId>" + subjectId + " order by subject_id ASC";
 		}
 		List<TSubject> subjectList = subjectDAO.page(sql, 0, 1);
@@ -173,10 +178,21 @@ public class wenjuanAction extends ActionSupport {
 			request.setAttribute("subject", subjectList.get(0));
 			List<TAnswer> answers = answerDAO.getHibernateTemplate().find("from TAnswer where subjectId=" + subjectList.get(0).getSubjectId());
 			request.setAttribute("answers", answers);
+			request.setAttribute("wenjuanId", wenjuanId);
+			request.setAttribute("mingchengType", mingchengType);
+			
+			if(StringUtils.isEmpty(currentWenjuanID)) {
+				currentWenjuanID = String.valueOf(System.currentTimeMillis());
+			}
+			request.setAttribute("currentWenjuanID", currentWenjuanID);
+			return ActionSupport.SUCCESS;
+		} else if (StringUtils.isNotEmpty(currentWenjuanID)) {
+			request.setAttribute("msg", "答题结束，非常感谢您的参与");
+			return "msg";
 		} else {
-			request.setAttribute("subject", null);
+			request.setAttribute("msg", "此问卷调查还未添加题目！");
+			return "msg";
 		}
-		return ActionSupport.SUCCESS;
 	}
 
 	
@@ -188,30 +204,46 @@ public class wenjuanAction extends ActionSupport {
 	 */
 	public String getTimuByWenjuanIdOne2() throws Exception{
 		HttpServletRequest request = ServletActionContext.getRequest();
-		//String 此次问卷ID = request.getParameter("此次问卷ID");//此次问卷ID
+		String currentWenjuanID = request.getParameter("currentWenjuanID");//此次问卷ID
 		String wenjuanId = request.getParameter("wenjuan_id");//问卷信息ID
 		String subjectId = request.getParameter("subject_id");//題目ID,便于获取下一道题目
-		String answerContent = request.getParameter("answer_content");//題目答案內容,根据所选选项进行跳转到对应题目
-		String subjectSql = "from TSubject where wenjuan_id=" + wenjuanId + " order by subject_id ASC";
-		List<TSubject> subjectList = subjectDAO.getHibernateTemplate().find(subjectSql);
-		Map<String,Object> response = (Map) ServletActionContext.getContext().get("request");
-		if("".equals(subjectId) || null==subjectId) {//first time 
-			response.put("subject", subjectList.get(0));
-			//return ActionSupport.SUCCESS;
-		}else if(null !=answerContent && !"".equals(answerContent)){//the second time with the answer
-			String answerSql = "from TAnswer where answer_content='" + answerContent + "' and subject_id=" + subjectId;
-			List<TAnswer> answerList = answerDAO.getHibernateTemplate().find(answerSql);
-			if(answerList.size() !=1) {
-				throw new Exception("本题答案对应题目异常,请联系管理员!");
+		String subjectRelId = request.getParameter("subjectRelId");//題目答案选项,根据所选选项进行跳转到对应题目
+		
+		String sql = "";
+		if("".equals(subjectId) || null==subjectId) {
+			sql = "from TSubject where wenjuanId=" + wenjuanId + " order by subjectId ASC";
+		}else {
+			// 将问卷过程数据入库。未做 TODO
+			
+			if (StringUtils.isEmpty(subjectRelId)) {
+				request.setAttribute("msg", "答题结束，非常感谢您的参与");
+				return "msg";
+			} else {
+				sql = "from TSubject where wenjuanId=" + wenjuanId + " and subjectId=" + subjectRelId;
 			}
-			TAnswer answer = answerList.get(0);
-			Integer subjectRelId = answer.getSubjectRelId();
-			TSubject subject = subjectDAO.findById(subjectRelId.longValue());
-			response.put("subject", subject);
 		}
-		request.setAttribute("msg", "getTimuByWenjuanIdOne2题目获取成功!");
-		return "msg";
-		//return ActionSupport.SUCCESS;
+		List<TSubject> subjectList = subjectDAO.page(sql, 0, 1);
+		
+		if(subjectList != null && subjectList.size() > 0) {
+			request.setAttribute("subject", subjectList.get(0));
+			List<TAnswer> answers = answerDAO.getHibernateTemplate().find("from TAnswer where subjectId=" + subjectList.get(0).getSubjectId());
+			request.setAttribute("answers", answers);
+			request.setAttribute("wenjuanId", wenjuanId);
+			request.setAttribute("mingchengType", mingchengType);
+			
+			if(StringUtils.isEmpty(currentWenjuanID)) {
+				currentWenjuanID = String.valueOf(System.currentTimeMillis());
+			}
+			request.setAttribute("currentWenjuanID", currentWenjuanID);
+			return ActionSupport.SUCCESS;
+		} else if (StringUtils.isNotEmpty(currentWenjuanID)) {
+			request.setAttribute("msg", "答题结束，非常感谢您的参与");
+			return "msg";
+		} else {
+			request.setAttribute("msg", "此问卷调查还未添加题目！");
+			return "msg";
+		}
+		
 	}
 	
 	public String getId() {

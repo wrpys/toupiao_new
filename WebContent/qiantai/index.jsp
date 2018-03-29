@@ -20,9 +20,11 @@
 		
 	    <script type="text/javascript">
     	   var wenjuan_id = null;
-	       function wenjuanDetailQian(id)
+    	   var mingchengType = null;
+	       function wenjuanDetailQian(id, type)
            {
 	    	   wenjuan_id = id;
+	    	   mingchengType = type;
 	    	   $("#dialog").dialog("open");
            } 
 	       $(function(){
@@ -31,8 +33,14 @@
         		      modal: true,
         		      width: 700,
         		      height: 500,
-        		      open: function(ev, ui){  
-        	             $('#subjectRel').attr('src','<%=path%>/getTimuByWenjuanId1.action?wenjuan_id=' + wenjuan_id);  
+        		      open: function(ev, ui){
+        		    	 if(mingchengType == 2) {
+	        	             $('#subjectRel').attr('src','<%=path%>/getTimuByWenjuanIdOne2.action?wenjuan_id=' + wenjuan_id + '&mingchengType=' + mingchengType);  
+        		    		 
+        		    	 } else {
+	        	             $('#subjectRel').attr('src','<%=path%>/getTimuByWenjuanId1.action?wenjuan_id=' + wenjuan_id + '&mingchengType=' + mingchengType);  
+        		    		 
+        		    	 }
         	          }
         		});
         	})
@@ -52,7 +60,7 @@
                                   <div class="c1-bline" style="padding:7px 0px;">
                                        <div class="f-left">
                                             <img src="<%=path %>/img/head-mark4.gif" align="middle" class="img-vm" border="0"/> 
-                                            <a href="#" onclick="wenjuanDetailQian(<s:property value="#wenjuan.id"/>)">
+                                            <a href="#" onclick="wenjuanDetailQian(<s:property value="#wenjuan.id"/>,<s:property value="#wenjuan.mingchengType"/>)">
                                             <s:property value="#wenjuan.mingcheng"/></a>
                                        </div>
                                        <div class="f-right"><s:property value="#wenjuan.shijian"/></div>

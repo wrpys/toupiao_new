@@ -89,7 +89,7 @@ String mingchengType = request.getParameter("mingchengType");
            	    $("#dialog").dialog("open");
            	 	currentSubjectRelId = $(obj).prev();
             	//alert($(obj).prev().attr("name"));
-            	console.log(currentSubjectRelId);
+            	//console.log(currentSubjectRelId);
             }
           
           function c() {

@@ -53,19 +53,22 @@
 			}
 			
 		</style>
-	    <script type="text/javascript">
-    	   var wenjuan_id = null;
-	       function wenjuanDetailQian(id)
-           {
-           } 
-	    </script>
+		<script>
+			function selectAnswer(id) {
+				if(undefined == id) return ;
+				$("#subjectRelId").val(id);
+			}
+		</script>
 	</head>
 
 	<body>
-		<form action="<%=path%>/getTimuByWenjuanId1.action">
+		<form action="<%=path%>/<c:if test="${mingchengType==1}">getTimuByWenjuanId1.action</c:if><c:if test="${mingchengType==2}">getTimuByWenjuanIdOne2.action</c:if>">
 			<div class="main">
 				<input type="hidden" name="wenjuan_id" value="${subject.wenjuanId}" />
 				<input type="hidden" name="subject_id" value="${subject.subjectId}" />
+				<input type="hidden" name="currentWenjuanID" value="${currentWenjuanID}" />
+				<input type="hidden" name="mingchengType" value="${mingchengType}" />
+				<input type="hidden" id="subjectRelId" name="subjectRelId" />
 				<div class="title"><label>题目：</label>${subject.subjectTitle}</div>
 				<c:if test="${subject.subjectType == 1}">
 				<ul>
@@ -75,7 +78,7 @@
 							<c:set var="index" value="${vs.index}" />
 							<c:out value="${subject.getLetterByIndex(index)}" />:
 						</label>
-						<input type="radio" name="answer" value="${answer.answerId}"/>${answer.answerContent}
+						<input type="radio" name="answer" value="${answer.answerId}" onchange="selectAnswer(${answer.subjectRelId});"/>${answer.answerContent}
 					</li>
 					</c:forEach>
 				</ul>

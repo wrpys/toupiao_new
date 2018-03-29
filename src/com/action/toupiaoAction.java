@@ -3,6 +3,7 @@ package com.action;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -62,6 +63,18 @@ public class toupiaoAction extends ActionSupport {
 		return "msg";
 	}
 	
+	public String subjectMana() {
+		HttpServletRequest request = ServletActionContext.getRequest();
+		String wenjuanId = request.getParameter("wenjuan_id");//问卷信息ID
+		String mingchengType = request.getParameter("mingchengType");//问卷信息类型
+		String sql = "from TSubject where wenjuan_id=" + wenjuanId + " order by subject_id ASC";
+		List<TSubject> subjectList = subjectDAO.getHibernateTemplate().find(sql);
+		request.setAttribute("subjectList", subjectList);
+		request.setAttribute("wenjuanId", wenjuanId);
+		request.setAttribute("mingchengType", mingchengType);
+		return ActionSupport.SUCCESS;
+	}
+	
 	/**
 	 * 投票-顺序添加题目
 	 * @author CZX
@@ -85,7 +98,7 @@ public class toupiaoAction extends ActionSupport {
 			answerDAO.save(answer);
 		}
 		this.setMessage("添加完毕");
-		this.setPath("admin/toupiao/toupiaoAdd.jsp?wenjuan_id="+wenjuanId+"&mingchengType="+mingchengType);
+		this.setPath("admin/toupiao/subjectMana.jsp?wenjuan_id="+wenjuanId+"&mingchengType="+mingchengType);
 		return "succeed";
 	}
 	
@@ -112,7 +125,7 @@ public class toupiaoAction extends ActionSupport {
 			answerDAO.save(answer);
 		}
 		this.setMessage("添加完毕");
-		this.setPath("admin/toupiao/toupiaoAdd.jsp?wenjuan_id="+wenjuanId+"&mingchengType="+mingchengType);
+		this.setPath("subjectMana.action?wenjuan_id="+wenjuanId+"&mingchengType="+mingchengType);
 		return "succeed";
 	}
 	

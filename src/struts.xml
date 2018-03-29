@@ -83,10 +83,13 @@
 			<result>/qiantai/wenjuan/wenjuan_shunxu.jsp</result>
 		</action>
 		<action name="getTimuByWenjuanIdOne2" class="wenjuanAction" method="getTimuByWenjuanIdOne2">
-			<result>/qiantai/wenjuan/wenjuan_tiaozhuan.jsp</result>
+			<result>/qiantai/wenjuan/wenjuan_shunxu.jsp</result>
 		</action>
 		<action name="getAllSubjects" class="wenjuanAction" method="getAllSubjects">
 			<result>/admin/toupiao/select_subject.jsp</result>
+		</action>
+		<action name="subjectMana" class="toupiaoAction" method="subjectMana">
+			<result>/admin/toupiao/subjectMana.jsp</result>
 		</action>
 		<!-- czx add end-->
 		<action name="wenjuanAdd" class="wenjuanAction" method="wenjuanAdd">
