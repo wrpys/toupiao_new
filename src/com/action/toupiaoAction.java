@@ -98,7 +98,7 @@ public class toupiaoAction extends ActionSupport {
 			answerDAO.save(answer);
 		}
 		this.setMessage("ÃÌº”ÕÍ±œ");
-		this.setPath("admin/toupiao/subjectMana.jsp?wenjuan_id="+wenjuanId+"&mingchengType="+mingchengType);
+		this.setPath("subjectMana.action?wenjuan_id="+wenjuanId+"&mingchengType="+mingchengType);
 		return "succeed";
 	}
 	

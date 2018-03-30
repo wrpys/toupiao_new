@@ -11,6 +11,8 @@ public class TAnswer implements java.io.Serializable{
 	private Long subjectId;
 	
 	private Integer subjectRelId;
+	
+	private String label;
 
 	public Integer getAnswerId() {
 		return answerId;
@@ -42,6 +44,14 @@ public class TAnswer implements java.io.Serializable{
 
 	public void setSubjectRelId(Integer subjectRelId) {
 		this.subjectRelId = subjectRelId;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
 	}
 	
 }

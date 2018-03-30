@@ -177,7 +177,15 @@ public class wenjuanAction extends ActionSupport {
 		if(subjectList != null && subjectList.size() > 0) {
 			request.setAttribute("subject", subjectList.get(0));
 			List<TAnswer> answers = answerDAO.getHibernateTemplate().find("from TAnswer where subjectId=" + subjectList.get(0).getSubjectId());
-			request.setAttribute("answers", answers);
+			List<TAnswer> answersTmp = new ArrayList<TAnswer>();
+			if(answers != null) {
+				for (int i = 0; i < answers.size(); i++) {
+					TAnswer t = answers.get(i);
+					t.setLabel(subjectList.get(0).getLetterByIndex(i));
+					answersTmp.add(t);
+				}
+			}
+			request.setAttribute("answers", answersTmp);
 			request.setAttribute("wenjuanId", wenjuanId);
 			request.setAttribute("mingchengType", mingchengType);
 			
@@ -227,7 +235,15 @@ public class wenjuanAction extends ActionSupport {
 		if(subjectList != null && subjectList.size() > 0) {
 			request.setAttribute("subject", subjectList.get(0));
 			List<TAnswer> answers = answerDAO.getHibernateTemplate().find("from TAnswer where subjectId=" + subjectList.get(0).getSubjectId());
-			request.setAttribute("answers", answers);
+			List<TAnswer> answersTmp = new ArrayList<TAnswer>();
+			if(answers != null) {
+				for (int i = 0; i < answers.size(); i++) {
+					TAnswer t = answers.get(i);
+					t.setLabel(subjectList.get(0).getLetterByIndex(i));
+					answersTmp.add(t);
+				}
+			}
+			request.setAttribute("answers", answersTmp);
 			request.setAttribute("wenjuanId", wenjuanId);
 			request.setAttribute("mingchengType", mingchengType);
 			

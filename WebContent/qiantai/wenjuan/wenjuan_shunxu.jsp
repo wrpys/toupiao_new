@@ -75,8 +75,7 @@
 					<c:forEach var="answer" items="${answers}" varStatus="vs">
 					<li>
 						<label>
-							<c:set var="index" value="${vs.index}" />
-							<c:out value="${subject.getLetterByIndex(index)}" />:
+							${answer.label}:
 						</label>
 						<input type="radio" name="answer" value="${answer.answerId}" onchange="selectAnswer(${answer.subjectRelId});"/>${answer.answerContent}
 					</li>
@@ -88,8 +87,7 @@
 					<c:forEach var="answer" items="${answers}" varStatus="vs">
 					<li>
 						<label>
-							<c:set var="index" value="${vs.index}" />
-							<c:out value="${subject.getLetterByIndex(index)}" />:
+							${answer.label}:
 						</label>
 						<input type="checkbox" name="answer" value="${answer.answerId}"/>${answer.answerContent}
 					</li>
